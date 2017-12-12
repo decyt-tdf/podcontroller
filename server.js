@@ -25,10 +25,9 @@ app.all('*', function(req, res, next) {
 app.post('/', function(req, res) {
   var name = req.body.repository.repo_name;
   var tag = req.body.push_data.tag;
-  var directory = "kubernetes/"+name
 
 if (fs.existsSync(directory)){
-  	 dir = exec("sh "+directory+"/actualizar.sh", function(err, stdout, stderr) {
+  	 dir = exec("helm --help", function(err, stdout, stderr) {
  	      if (err) { console.log(err) } else {
  	      		bot.post(process.env.BOT).send({msg: name}).end(function(err, respuesta){
  	      			if(err) { console.log(err) }
