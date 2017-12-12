@@ -25,9 +25,7 @@ app.all('*', function(req, res, next) {
 app.post('/', function(req, res) {
   var name = req.body.repository.repo_name;
   var tag = req.body.push_data.tag;
-
-if (fs.existsSync(directory)){
-  	 dir = exec("helm --help", function(err, stdout, stderr) {
+  var dir = exec("helm --help", function(err, stdout, stderr) {
  	      if (err) { console.log(err) } else {
  	      		bot.post(process.env.BOT).send({msg: name}).end(function(err, respuesta){
  	      			if(err) { console.log(err) }
@@ -35,9 +33,6 @@ if (fs.existsSync(directory)){
  	       }
 });
      dir.on('exit', function (code) { console.log(code) });
-} else {
-	console.log("El directorio no existe"+ directory)
-}  
 });
 
 http.createServer(app).listen(process.env.PORT, function() {
