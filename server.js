@@ -25,14 +25,25 @@ app.all('*', function(req, res, next) {
 app.post('/', function(req, res) {
   var name = req.body.repository.repo_name;
   var tag = req.body.push_data.tag;
-  var dir = exec("helm --help", function(err, stdout, stderr) {
- 	      if (err) { console.log(err) } else {
- 	      		bot.post(process.env.BOT).send({msg: name}).end(function(err, respuesta){
- 	      			if(err) { console.log(err) }
-				})
- 	       }
+  if(tag === "latest") {
+    var directory = "kubernetes/siep-produccion"+name
+  } else if (tag === "developer") {
+    var directory = "kubernetes/siep-desarrollo"+name
+  }
+
+if (fs.existsSync(directory)){
+     dir = exec('sh '+directory+'/actualizar.sh && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
+        if (err) { console.log(err) } else {
+              console.log(stdout)
+            bot.post(process.env.BOT).send({msg: "Se actualizo el repositorio "+name}).end(function(err, respuesta){
+              if(err) { console.log(err) }
+        })
+         }
 });
      dir.on('exit', function (code) { console.log(code) });
+} else {
+  console.log("El directorio no existe"+ directory)
+}  
 });
 
 http.createServer(app).listen(process.env.PORT, function() {
