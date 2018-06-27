@@ -29,11 +29,11 @@ app.post('/', function(req, res) {
   if(tag === "latest") {
     var version = "latest"
     var namespace = "siep-produccion"
-    var directory = "deployments/"+namespace+"/"+name
+    var directory = "deployments/"+namespace+"/"+repo
   } else if (tag === "developer") {
     var version = "developer"
     var namespace = "siep-desarrollo"
-    var directory = "deployments/"+namespace+"/"+name
+    var directory = "deployments/"+namespace+"/"+repo
   }
 
 if (fs.existsSync(directory)){
