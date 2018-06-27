@@ -28,11 +28,11 @@ app.post('/', function(req, res) {
   if(tag === "latest") {
     var version = "latest"
     var namespace = "siep-produccion"
-    var directory = "deployments/"+namespace+name
+    var directory = "deployments/"+namespace+"/"+name
   } else if (tag === "developer") {
     var version = "developer"
     var namespace = "siep-desarrollo"
-    var directory = "deployments/"+namespace+name
+    var directory = "deployments/"+namespace+"/"+name
   }
 
 if (fs.existsSync(directory)){
@@ -46,7 +46,7 @@ if (fs.existsSync(directory)){
 });
      dir.on('exit', function (code) { console.log(code) });
 } else {
-  console.log("El directorio no existe"+ directory)
+  console.log("El directorio no existe "+ directory)
 }  
 });
 
