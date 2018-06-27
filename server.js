@@ -25,6 +25,7 @@ app.all('*', function(req, res, next) {
 app.post('/', function(req, res) {
   var name = req.body.repository.repo_name;
   var tag = req.body.push_data.tag;
+  var repo = name.split("/")[1]
   if(tag === "latest") {
     var version = "latest"
     var namespace = "siep-produccion"
@@ -36,7 +37,7 @@ app.post('/', function(req, res) {
   }
 
 if (fs.existsSync(directory)){
-     dir = exec('docker pull decyt/'+name+' && kubectl set image deployment/'+name+' '+name+'=decyt/'+name+':'+version+' --namespace='+namespace+' && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
+     dir = exec('docker pull '+name+' && kubectl set image deployment/'+repo+' '+repo+'='+name+':'+version+' --namespace='+namespace+' && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
         if (err) { console.log(err) } else {
               console.log(stdout)
         /*    bot.post(process.env.BOT).send({msg: "Se actualizo el repositorio "+name}).end(function(err, respuesta){
