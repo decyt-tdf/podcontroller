@@ -26,19 +26,23 @@ app.post('/', function(req, res) {
   var name = req.body.repository.repo_name;
   var tag = req.body.push_data.tag;
   if(tag === "latest") {
-    var directory = "kubernetes/siep-produccion"+name
+    var version = "latest"
+    var namespace = "siep-produccion"
+    var directory = "kubernetes/"+namespace+name
   } else if (tag === "developer") {
-    var directory = "kubernetes/siep-desarrollo"+name
+    var version = "developer"
+    var namespace = "siep-desarrollo"
+    var directory = "kubernetes/"+namespace+name
   }
 
 if (fs.existsSync(directory)){
-     dir = exec('sh '+directory+'/actualizar.sh && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
+     dir = exec('kubectl set image decyt/'+name+' '+name+'=decyt/'+name+':'+version+' --namespace='+namespace+' && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
         if (err) { console.log(err) } else {
               console.log(stdout)
-            bot.post(process.env.BOT).send({msg: "Se actualizo el repositorio "+name}).end(function(err, respuesta){
+        /*    bot.post(process.env.BOT).send({msg: "Se actualizo el repositorio "+name}).end(function(err, respuesta){
               if(err) { console.log(err) }
-        })
-         }
+        }) */
+         } 
 });
      dir.on('exit', function (code) { console.log(code) });
 } else {
