@@ -36,7 +36,7 @@ app.post('/', function(req, res) {
   }
 
 if (fs.existsSync(directory)){
-     dir = exec('docker pull decyt/'+name+' && kubectl set image deployment/'+name+' '+name+'=decyt/'+name+':'+version+' --namespace='+namespace, function(err, stdout, stderr) {
+     dir = exec('docker pull decyt/'+name+' && kubectl set image deployment/'+name+' '+name+'=decyt/'+name+':'+version+' --namespace='+namespace+' && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
         if (err) { console.log(err) } else {
               console.log(stdout)
         /*    bot.post(process.env.BOT).send({msg: "Se actualizo el repositorio "+name}).end(function(err, respuesta){
