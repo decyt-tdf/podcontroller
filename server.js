@@ -1,6 +1,6 @@
 var http = require('http');
 var app = require('express')();
-var exec = require('exec');
+var child_process = require('child_process');
 var bodyParser = require('body-parser')
 var fs = require('fs');
 var bot = require("superagent")
@@ -37,7 +37,7 @@ app.post('/', function(req, res) {
   }
 
 if (fs.existsSync(directory)){
-     dir = exec('docker pull '+name+' && kubectl set image deployment/'+repo+' '+repo+'='+name+':'+version+' --namespace='+namespace+' && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
+     dir = child_process.exec('kubectl set image deployment/'+repo+' '+repo+'='+name+':'+version+' --namespace='+namespace+' && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
         if (err) { console.log(err) } else {
               console.log(stdout)
         /*    bot.post(process.env.BOT).send({msg: "Se actualizo el repositorio "+name}).end(function(err, respuesta){
