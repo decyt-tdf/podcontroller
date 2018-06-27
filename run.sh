@@ -1,2 +1,2 @@
-export KUBECONFIG=/home/.kube/admin.conf
+export KUBECONFIG=/home/.kube/config
 node server.js
