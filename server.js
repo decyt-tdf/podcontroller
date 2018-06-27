@@ -28,11 +28,11 @@ app.post('/', function(req, res) {
   if(tag === "latest") {
     var version = "latest"
     var namespace = "siep-produccion"
-    var directory = "kubernetes/"+namespace+name
+    var directory = "deployments/"+namespace+name
   } else if (tag === "developer") {
     var version = "developer"
     var namespace = "siep-desarrollo"
-    var directory = "kubernetes/"+namespace+name
+    var directory = "deployments/"+namespace+name
   }
 
 if (fs.existsSync(directory)){
