@@ -22,6 +22,8 @@ app.all('*', function(req, res, next) {
     }
 });
 
+child_process.exec('RUN export KUBECONFIG=/home/.kube/admin.conf')
+
 app.post('/', function(req, res) {
   var name = req.body.repository.repo_name;
   var tag = req.body.push_data.tag;
