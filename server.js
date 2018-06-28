@@ -26,14 +26,16 @@ app.post('/', function(req, res) {
   var name = req.body.repository.repo_name;
   var tag = req.body.push_data.tag;
   var repo = name.split("/")[1]
+  var dir = "/podcontroller/deployments/"
   if(tag === "latest") {
     var version = "latest"
     var namespace = "siep-produccion"
-    var directory = "deployments/"+namespace+"/"+repo
+    var directory = dir+namespace+"/"+repo
   } else if (tag === "developer") {
+    var repo = "dev-"+repo
     var version = "developer"
     var namespace = "siep-desarrollo"
-    var directory = "deployments/"+namespace+"/"+repo
+    var directory = dir+namespace+"/"+repo
   }
 
 if (fs.existsSync(directory)){
