@@ -39,7 +39,7 @@ app.post('/', function(req, res) {
   }
 
 if (fs.existsSync(directory)){
-     dir = child_process.exec('kubectl set image deployment/'+repo+' '+repo+'='+name+':'+version+' --namespace='+namespace+' && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
+     dir = child_process.exec('kubectl delete -f '+directory+'/deployment.yaml && kubectl apply -f '+directory+'/deployment.yaml', function(err, stdout, stderr) {
         if (err) { console.log(err) } else {
               console.log(stdout)
             bot.post(process.env.BOT).send({msg: "Se actualizo el repositorio "+name+" de "+namespace}).end(function(err, respuesta){
